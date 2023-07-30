@@ -1,42 +1,14 @@
 <?php
-class Database
-{
-    public $connection;
-    public $statement;
 
-    public function __construct($config, $username = 'root', $password = '')
-    {
-        $dsn = 'mysql:host=' . $config['host'] . ';dbname=' . $config['database'];
-        $this->connection = new PDO($dsn, $username, $password, [
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
-    }
 
-    public function query($query, $params = [])
-    {
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->execute($params);
-        return $this;
-    }
+$host = 'localhost';
+$dbname = 'contact_form_db';
+$username = 'root';
+$password = '';
 
-    public function get()
-    {
-        return $this->statement->fetchAll();
-    }
-
-    public function find()
-    {
-        return $this->statement->fetch();
-    }
-
-    public function findOrFail()
-    {
-        $result = $this->find();
-
-        if (!$result) {
-            throw new Exception("Record not found.");
-        }
-
-        return $result;
-    }
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Database connection failed: ' . $e->getMessage());
 }

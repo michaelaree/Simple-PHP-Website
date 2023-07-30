@@ -1,28 +1,34 @@
 <?php
 
-$request_uri = $_SERVER['REQUEST_URI'];
+require 'database.php';
 
+$page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-$request_uri = strtok($request_uri, '?');
+switch ($page) {
+    case 'home':
+        $content = getContentFromDatabase('home');
+        break;
 
+    case 'about':
+        $content = getContentFromDatabase('about');
+        break;
 
-$base_path = '/';
+    case 'services':
+        $content = getContentFromDatabase('services');
+        break;
 
-
-$routes = array(
-    $base_path => 'home.php',
-    $base_path . 'about' => 'about.php',
-    $base_path . 'contact' => 'contact.php',
-    $base_path . 'thank_you' => 'thank_you.php',
-);
-
-
-if (array_key_exists($request_uri, $routes)) {
-    
-    include_once($routes[$request_uri]);
-} else {
-    
-    http_response_code(404);
-    echo '404 Not Found';
+    default:
+        $content = getContentFromDatabase('404');
 }
-?>
+
+function getContentFromDatabase($pageSlug) {
+    global $conn;
+
+    $sql = "SELECT content FROM users WHERE user_id = 1"; 
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':pageSlug', $pageSlug, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['content'] : 'Page not found.';
+}

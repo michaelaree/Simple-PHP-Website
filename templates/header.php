@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -82,48 +85,72 @@
 <body>
     <header>
 
-    <nav>
-            <div class="left-links">
-            
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About</a></li>
-                    <li><a href="contact.php">Contact</a></li>
-                </ul>
-            </div>
-            <div class="right-links">
-                <?php
-                
-                session_start();
-                if (isset($_SESSION['user_id'])) {
-                    echo '<a href="dashboard.php">Dashboard</a>';
-                    echo '<a href="logout.php">Logout</a>';
-                } else {
-                    echo '<a href="login.php">Login</a>';
-                }
-                ?>
-            </div>
+        <nav>
+
+
+
+        <style>
+    
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+   
+    .login-button {
+        background-color: #3498db;
+        color: #fff;
+    }
+
+    .login-button:hover {
+        background-color: #2980b9;
+    }
+
+    
+    .register-button {
+        background-color: #27ae60;
+        color: #fff;
+    }
+
+    .register-button:hover {
+        background-color: #219653;
+    }
+</style>
+
+<div class="left-links">
+    <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="about.php">About</a></li>
+        <li><a href="contact.php">Contact</a></li>
+    </ul>
+</div>
+
+<div class="right-links">
+    <?php
+    session_start();
+
+    if (isset($_SESSION['user_id'])) {
+        echo '<a href="dashboard.php" class="button-link login-button">Dashboard</a>';
+        echo '<a href="logout.php" class="button-link login-button">Logout</a>';
+    } else {
+        echo '<a href="login.php" class="button-link login-button">Login</a>';
+        echo '<a href="registration.php" class="button-link register-button">Register</a>';
+    }
+    ?>
+</div>
+
+
         </nav>
 
 
     </header>
 
-    
 
 
-        
+
+
 
     </div>
     <main>
-
-
-
-
-
-
-
-
-
-
-
-

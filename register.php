@@ -1,20 +1,47 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate and sanitize user inputs
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    
+    $host = 'localhost';
+    $username = 'root';
+    $password = '';
+    $dbname = 'contact_form_db';
 
-    // Hash the password
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    
+    $connection = mysqli_connect($host, $username, $password, $dbname);
 
-    // Save the user credentials to the database
-    // ... (database connection and INSERT query)
+    
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error() . " (Error number: " . mysqli_connect_errno() . ")");
+    }
 
-    // Redirect to login page or dashboard after successful registration
-    header("Location: login.php");
-    exit();
+    
+    $username = isset($_POST['username']) ? mysqli_real_escape_string($connection, $_POST['username']) : '';
+    $password = isset($_POST['password']) ? mysqli_real_escape_string($connection, $_POST['password']) : '';
+
+    
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    
+    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $stmt = mysqli_prepare($connection, $sql);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, 'ss', $username, $hashedPassword);
+        if (mysqli_stmt_execute($stmt)) {
+            
+            echo "User registered successfully!";
+        } else {
+            echo "Error: " . mysqli_stmt_error($stmt);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "Error: " . mysqli_error($connection);
+    }
+
+    
+    mysqli_close($connection);
 }
 ?>
-
-<!-- Registration Form -->
-<!-- ... (HTML form code) -->
