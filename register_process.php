@@ -28,7 +28,7 @@ try {
            
             $_SESSION["user_id"] = $row['id'];
             header("Location: dashboard.php"); 
-            exit();
+            exit(); 
         } else {
             echo "Invalid username or password.";
         }

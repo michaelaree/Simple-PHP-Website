@@ -61,6 +61,7 @@
         }
 
         nav ul li a:hover {
+            
             border-bottom: 2px solid #fff;
 
         }

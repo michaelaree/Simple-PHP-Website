@@ -21,10 +21,11 @@ switch ($page) {
         $content = getContentFromDatabase('404');
 }
 
-function getContentFromDatabase($pageSlug) {
+function getContentFromDatabase($pageSlug)
+{
     global $conn;
 
-    $sql = "SELECT content FROM users WHERE user_id = 1"; 
+    $sql = "SELECT content FROM users WHERE user_id = 1";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':pageSlug', $pageSlug, PDO::PARAM_STR);
     $stmt->execute();

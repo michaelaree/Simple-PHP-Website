@@ -7,9 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
 
-
     if ($user && password_verify($password, $user['password_hash'])) {
-
+        
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         header("Location: dashboard.php");
@@ -18,7 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = "Invalid username or password.";
     }
 }
+
+
 ?>
+
 
 
 
@@ -82,6 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 14px;
             margin-top: 10px;
         }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 
 
@@ -98,3 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <?php require "templates/footer.php";?>
+
+
+

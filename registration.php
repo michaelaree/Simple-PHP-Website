@@ -49,6 +49,15 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+
+        
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
