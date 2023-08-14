@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = 'root';
     $password = '';
     $database = 'contact_form_db';
+    
 
     
     $connection = mysqli_connect($host, $username, $password, $database);
